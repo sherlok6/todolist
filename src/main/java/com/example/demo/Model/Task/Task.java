@@ -20,5 +20,6 @@ public class Task {
     @Column(name = "login")
     private String login;
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "state")
     private State state;
 }

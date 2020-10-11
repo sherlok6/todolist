@@ -48,10 +48,8 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public String update(@RequestParam(name = "map",required = false) JSONObject map,Authentication authentication){
-        taskList = service.findAllByLogin(authentication.getName());
-        taskList.stream().forEach((task1)->{
-            System.out.print(task1.getTask()+" ; ("+task1.getState()+")");
-        });
+        String login = authentication.getName();
+        taskList = service.findAllByLogin(login);
         taskList.stream().forEach((task2)->{
             switch (map.getString(task2.getTask())){
                 case ("none"):task2.setState(State.ACTIVE);
@@ -62,12 +60,7 @@ public class TaskController {
                     break;
             }
         });
-        System.out.println(" ");
-        taskList.stream().forEach((task1)->{
-            System.out.print(task1.getTask()+" ; ("+task1.getState()+")");
-        });
-        System.out.println(" ");
-        service.updateList(taskList);
+        service.updateList(taskList,login);
         return "todolist";
     }
 

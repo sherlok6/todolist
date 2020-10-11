@@ -15,8 +15,9 @@
 </div>
 
 <ul id="myUL">
-        <span th:each="task : ${list}" id="list" name="LIST">
-            <li th:text="${task.getTask()}"></li>
+        <span th:each="task : ${list}" id="list" name="LIST" th:switch="${task.getState().toString()}">
+            <li th:case="ACTIVE" th:text="${task.getTask()}" ></li>
+            <li th:case="DONE" th:text="${task.getTask()} " th:class="checked"></li>
         </span>
 </ul>
 <span onclick="collect()" class="addBtn">Save List </span>

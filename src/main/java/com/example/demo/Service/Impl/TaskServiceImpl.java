@@ -44,10 +44,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateList(List<Task> task) {
-       ListIterator<Task> taskListIterator = task.listIterator();
-           while(taskListIterator.hasNext()) {
-               repository.updateStateTask(taskListIterator.next().getTask(), taskListIterator.next().getState().toString());
-           }
+    public void updateList(List<Task> task,String login) {
+        ListIterator<Task> iterator = task.listIterator();
+        ListIterator<Task> list = findAllByLogin(login).listIterator();
+        while(iterator.hasNext()){
+            Task tl = iterator.next();
+            while (list.hasNext()){
+                Task ts = list.next();
+                if(ts.getTask().equals(tl.getTask())){
+                    repository.updateStateTask(ts.getTask(),tl.getState().toString());
+                }
+            }
+        }
+
     }
+
 }

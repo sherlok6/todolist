@@ -20,8 +20,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(value = "delete from fix_list where fix_list.id = :number_id", nativeQuery = true)
     void deleteById(@Param("number_id") Long id);
 
-    @Transactional
     @Modifying
-    @Query(value = "update  set  fix_f state = :state where task = :task", nativeQuery = true)
+    @Transactional
+    @Query(value = "update  fix_list set state=:state where fix_list.task=:task",nativeQuery = true)
     void updateStateTask(@Param("task") String task, @Param("state") String state);
 }
